@@ -65,6 +65,19 @@ app.post("/addproduct", async (req, res) => {
   }
 });
 
+// DELETE endpoint to remove a product by ID
+app.delete("/deleteproduct/:productId", async (req, res) => {
+  try {
+    const productId = req.params.productId;
+
+    await Product.findByIdAndDelete(productId);
+
+    res.status(200).json({ message: "Product deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete product" });
+  }
+});
+
 app.listen(port, (error) => {
   if (!error) {
     console.log("Server Running on Port " + port);
