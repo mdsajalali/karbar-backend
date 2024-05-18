@@ -87,6 +87,16 @@ app.delete("/deleteproduct/:productId", async (req, res) => {
 });
 
 // blogs api here
+
+app.get("/getblog", async (req, res) => {
+  try {
+    const blog = await Blog.find();
+    res.status(200).json(blog);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve blog" });
+  }
+});
+
 app.post("/addblog", async (req, res) => {
   try {
     const newBlog = req.body;
