@@ -108,6 +108,16 @@ app.post("/addblog", async (req, res) => {
   }
 });
 
+app.delete("/deleteblog/:blogId", async (req, res) => {
+  try {
+    const blogId = req.params.blogId;
+    await Blog.findByIdAndDelete(blogId);
+    res.status(200).json({ message: "Blog deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete Blog" });
+  }
+});
+
 app.listen(port, (error) => {
   if (!error) {
     console.log("Server Running on Port " + port);
