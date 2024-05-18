@@ -39,6 +39,14 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model("Product", productSchema);
 
+const blogSchema = new mongoose.Schema({
+  image: String,
+  title: String,
+  desc: String,
+});
+
+const Blog = mongoose.model("Blog", blogSchema);
+
 // API CREATION
 app.get("/", (req, res) => {
   res.send("Express App is Running");
@@ -75,6 +83,18 @@ app.delete("/deleteproduct/:productId", async (req, res) => {
     res.status(200).json({ message: "Product deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: "Failed to delete product" });
+  }
+});
+
+// blogs api here
+app.post("/addblog", async (req, res) => {
+  try {
+    const newBlog = req.body;
+    const product = new Blog(newBlog);
+    await product.save();
+    res.status(201).json(product);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to add blog" });
   }
 });
 
