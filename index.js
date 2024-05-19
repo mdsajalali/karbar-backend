@@ -39,6 +39,7 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model("Product", productSchema);
 
+// Schema for Creating Blogs
 const blogSchema = new mongoose.Schema({
   image: String,
   title: String,
@@ -49,10 +50,11 @@ const Blog = mongoose.model("Blog", blogSchema);
 
 // API CREATION
 app.get("/", (req, res) => {
-  res.send("Express App is Running");
+  res.send("Karbar App is Running");
 });
 
-app.get("/getproduct", async (req, res) => {
+// product api start here
+app.get("/getProduct", async (req, res) => {
   try {
     const products = await Product.find();
     res.status(200).json(products);
@@ -61,8 +63,7 @@ app.get("/getproduct", async (req, res) => {
   }
 });
 
-// POST endpoint to add a product
-app.post("/addproduct", async (req, res) => {
+app.post("/addProduct", async (req, res) => {
   try {
     const newProduct = req.body;
     const product = new Product(newProduct);
@@ -73,8 +74,7 @@ app.post("/addproduct", async (req, res) => {
   }
 });
 
-// DELETE endpoint to remove a product by ID
-app.delete("/deleteproduct/:productId", async (req, res) => {
+app.delete("/deleteProduct/:productId", async (req, res) => {
   try {
     const productId = req.params.productId;
 
@@ -86,9 +86,10 @@ app.delete("/deleteproduct/:productId", async (req, res) => {
   }
 });
 
-// blogs api here
+// blogs api end here
 
-app.get("/getblog", async (req, res) => {
+// blogs api start here
+app.get("/getBlog", async (req, res) => {
   try {
     const blog = await Blog.find();
     res.status(200).json(blog);
@@ -97,7 +98,7 @@ app.get("/getblog", async (req, res) => {
   }
 });
 
-app.post("/addblog", async (req, res) => {
+app.post("/addBlog", async (req, res) => {
   try {
     const newBlog = req.body;
     const product = new Blog(newBlog);
@@ -108,7 +109,7 @@ app.post("/addblog", async (req, res) => {
   }
 });
 
-app.delete("/deleteblog/:blogId", async (req, res) => {
+app.delete("/deleteBlog/:blogId", async (req, res) => {
   try {
     const blogId = req.params.blogId;
     await Blog.findByIdAndDelete(blogId);
@@ -117,6 +118,8 @@ app.delete("/deleteblog/:blogId", async (req, res) => {
     res.status(500).json({ error: "Failed to delete Blog" });
   }
 });
+
+// blogs api end here
 
 app.listen(port, (error) => {
   if (!error) {
